@@ -11,7 +11,3 @@ We plan on creating a water tracker that will run on mainly hand held devices, t
 
 
 
-
-
-6. Create a Branch for each team member as working branches. The ‘main’ branch should be
-reserved for the releasable code you will eventually submi
