@@ -3,7 +3,7 @@ Applications Programming Project - Water Tracker
 
 Tracy Mai - tracyymaii
 Minnie Cao - MinnieMwooh
-Kamile Vaicekonis - [github user id]
+Kamile Vaicekonis - kamile-v
 
 Water Tracker - 
 
