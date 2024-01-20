@@ -2,7 +2,7 @@
 Applications Programming Project - Water Tracker
 
 Tracy Mai - tracyymaii
-Minnie Cao - MinnnieMwooh
+Minnie Cao - MinnieMwooh
 Kamile Vaicekonis - kamile-v
 
 Water Tracker - 
