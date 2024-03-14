@@ -5,8 +5,8 @@ import QtQuick.Effects
 Rectangle {
     id: button
     color: "pink"
-    height: contentTxt.height * 1.2
-    width: contentTxt.width * 1.2
+    height: contentTxt.height * 1.3
+    width: contentTxt.width * 1.3
     border.width: button.height * 0.1
     border.color: "white"
     radius: 8
@@ -14,8 +14,6 @@ Rectangle {
     property string content
     property real fontSize: 0
     property bool fontBold: false
-    property var dest
-    property var appPage
 
     Text {
         id: contentTxt
@@ -30,8 +28,5 @@ Rectangle {
         onClicked: buttonClicked()
     }
 
-    function buttonClicked(){
-        appPage.visible = false
-        dest.visible = true
-    }
+    signal buttonClicked();
 }
