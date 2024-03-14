@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.LocalStorage
+import "Database.js" as JS
 
 ApplicationWindow {
     id: homePage
@@ -11,6 +12,8 @@ ApplicationWindow {
     visible: true
     color: "light blue"
     title: "App Name"
+
+
 
     ColumnLayout{
         Rectangle{
@@ -121,10 +124,19 @@ ApplicationWindow {
                 anchors.centerIn: parent
                 fontBold: true
                 fontSize: 13
-                dest: WaterLog{}
-                appPage: homePage
+                onButtonClicked: {
+                    homePage.visible = false
+                    logPage.visible = true
+                }
             }
         }
 
     }
+
+    Component{
+        id: logPageComp
+        WaterLog{}
+    }
+
+    property var logPage: logPageComp.createObject()
 }
