@@ -94,5 +94,65 @@ ApplicationWindow {
                 }
             }
         }
+
+        Rectangle {
+            width: logPage.width
+            height: message.height * 5
+            color: logPage.color
+            Text{
+                id: message
+                text: qsTr("Please Input Amount of Water")
+                visible: false
+                color: "red"
+                font.pointSize: 10
+                anchors.centerIn: parent
+                anchors.bottom: parent.bottom
+            }
+        }
+
+        Rectangle{
+            id: txtBox
+            y: 100
+            width: logPage.width * 0.4
+            height: 40
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "white"
+            radius: 5
+
+            TextInput {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: amountTxt
+                font.pixelSize: 20
+                font.bold: true
+                width: container.width - 40
+                color: "black"
+                focus: true
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    amountTxt.selectAll();
+                }
+            }
+        }
+
+        CustomButton{
+            id: addButton
+            content: "Add"
+            fontBold: true
+            fontSize: 13
+            anchors.topMargin: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            onButtonClicked: {
+                if (amountTxt.text === "")
+                    message.visible = true
+                else{
+                    message.visible = false
+                }
+            }
+        }
+
     }
 }
