@@ -37,7 +37,7 @@ function dbInsert(Pdate, Pamount, Phappiness)
 function dbInsertDate(Pdate)
 {
     let db = dbGetHandle()
-    let happiness = 0.7
+    let happiness = 0.5
     db.transaction(function (tx) {
         let result = tx.executeSql('SELECT date,amount FROM water_log WHERE date=?',
                 [Pdate])
@@ -55,12 +55,12 @@ function dbInsertDate(Pdate)
 function dbReadHappiness(Pdate)
 {
     let db = dbGetHandle()
-    let happiness = 0.7
+    let happiness = 0.5
     db.transaction(function (tx) {
         let result = tx.executeSql(
-                'SELECT happiness FROM water_log WHERE date=?', [Pdate])
-        if (result.rows.length === 0){
-            happiness = result.row.item(0).happiness
+                'SELECT * FROM water_log WHERE date=?', [Pdate])
+        if (result.rows.length !== 0){
+            happiness = result.rows.item(0).happiness
         }
     })
     return happiness
@@ -72,9 +72,9 @@ function dbReadAmount(Pdate)
     let amount = 0.0
     db.transaction(function (tx) {
         let result = tx.executeSql(
-                'SELECT amount FROM water_log WHERE date=?', [Pdate])
-        if (result.rows.length === 0){
-            amount = result.row.item(0).amount
+                'SELECT * FROM water_log WHERE date=?', [Pdate])
+        if (result.rows.length !== 0){
+            amount = result.rows.item(0).amount
         }
     })
     return amount
@@ -90,8 +90,7 @@ function dbReadAll()
             listModel.append({
                                  date: results.rows.item(i).date,
                                  checked: " ",
-                                 amount: results.rows.item(i).amount,
-                                 happiness: results.rows.item(i).happiness
+                                 amount: results.rows.item(i).amount
                              })
         }
     })
@@ -100,9 +99,14 @@ function dbReadAll()
 function dbUpdate(Pdate, Pamount, Phappiness)
 {
     let db = dbGetHandle()
+    let happy = 0.5
     db.transaction(function (tx) {
+        happy = dbReadHappiness(Pdate) + Phappiness
+        if (happy > 1.0){
+            happy = 1.0
+        }
         tx.executeSql(
-                    'update water_log set amount=?, happiness=? where date=?', [Pamount, Phappiness, Pdate])
+                    'update water_log set amount=?, happiness=? where date=?', [Pamount, happy, Pdate])
     })
 }
 

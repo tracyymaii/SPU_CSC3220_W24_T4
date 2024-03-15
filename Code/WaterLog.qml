@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.LocalStorage
+import "Database.js" as JS
 
 ApplicationWindow {
     id: logPage
@@ -60,7 +61,7 @@ ApplicationWindow {
             Text {
                 id: dateTxt
                 anchors.centerIn: parent
-                text: Qt.formatDateTime(new Date(), "MM/dd/yyyy")
+                text: today
                 font.pointSize: 15
             }
         }
@@ -78,7 +79,7 @@ ApplicationWindow {
                 anchors.centerIn: parent
                 Text {
                     id: waterTxt
-                    text: qsTr("Drank:  "+2+" L ")
+                    text: qsTr("Drank:  "+waterAmount+" L ")
                     font.pointSize: 13
                     anchors.right: parent.right
                     anchors.rightMargin: 2
@@ -123,9 +124,12 @@ ApplicationWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 id: amountTxt
+                validator: RegularExpressionValidator {
+                    regularExpression: /\d{1}/
+                }
                 font.pixelSize: 20
                 font.bold: true
-                width: container.width - 40
+                width: parent.width - 40
                 color: "black"
                 focus: true
             }
@@ -150,9 +154,18 @@ ApplicationWindow {
                     message.visible = true
                 else{
                     message.visible = false
+                    happinessRate = parseFloat(amountTxt.text) * 0.04
+                    waterAmount = waterAmount + parseFloat(amountTxt.text)
+                    JS.dbUpdate(today,waterAmount,happinessRate)
+                    happyRate = JS.dbReadHappiness(today)
                 }
             }
         }
+    }
 
+    property real happinessRate
+
+    Component.onCompleted: {
+        waterAmount = JS.dbReadAmount(today)
     }
 }
