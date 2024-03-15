@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import "Database.js" as JS
 
 ProgressBar{
     id: happinessBar
@@ -9,6 +10,8 @@ ProgressBar{
     value: currentRate
 
     anchors.centerIn: parent
+
+    property real currentRate
 
     Rectangle {
         anchors.fill: happinessBar
@@ -25,7 +28,7 @@ ProgressBar{
         radius: 4
     }
 
-    function changeValue(n){
-        happinessBar.value = n
+    Component.onCompleted: {
+        currentRate = JS.dbReadHappiness(today)
     }
 }
