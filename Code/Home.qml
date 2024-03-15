@@ -13,8 +13,6 @@ ApplicationWindow {
     color: "light blue"
     title: "App Name"
 
-
-
     ColumnLayout{
         Rectangle{
             id: toolBar
@@ -52,7 +50,7 @@ ApplicationWindow {
 
             HappinessBar{
                 id: happiness
-                value: 0.3
+                value: happyRate
             }
 
             Rectangle{
@@ -97,7 +95,7 @@ ApplicationWindow {
                 anchors.centerIn: parent
                 Text {
                     id: waterTxt
-                    text: qsTr("Today:  "+2+" L ")
+                    text: qsTr("Today:  "+waterAmount+" L ")
                     font.pointSize: 13
                     anchors.right: parent.right
                     anchors.rightMargin: 2
@@ -130,7 +128,17 @@ ApplicationWindow {
                 }
             }
         }
+    }
 
+    property string today: Qt.formatDateTime(new Date(), "MM/dd/yyyy")
+    property real waterAmount
+    property real happyRate
+
+    Component.onCompleted: {
+        JS.dbInit()
+        JS.dbInsertDate(today)
+        waterAmount = JS.dbReadAmount(today)
+        happyRate = JS.dbReadHappiness(today)
     }
 
     Component{
