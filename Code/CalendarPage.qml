@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.LocalStorage
+import "Database.js" as JS
 
 ApplicationWindow {
     id: calendarPage
@@ -9,6 +10,8 @@ ApplicationWindow {
     height: 667
     visible: false
     color: "light blue"
+
+    property date dateDisplay: new Date()
 
     ColumnLayout{
         Rectangle{
@@ -44,15 +47,15 @@ ApplicationWindow {
         Rectangle{
             id: heading
             width: calendarPage.width
-            height: monthTxt.height * 1.2
+            height: today.height * 1.2
             color: calendarPage.color
 
             anchors.topMargin: 8
 
             Text {
-                id: monthTxt
+                id: today
                 anchors.centerIn: parent
-                text: Qt.formatDate(new Date(), "MM/yyyy")
+                text: Qt.formatDate(dateDisplay, "MM/yyyy")
                 font.pointSize: 15
             }
 
@@ -62,6 +65,9 @@ ApplicationWindow {
                flat: true
                font.pointSize: 15
                anchors.left:parent.left
+               onClicked: {
+                   dateDisplay = new Date(dateDisplay.getFullYear(),dateDisplay.getMonth() - 1,1)
+               }
            }
 
 
@@ -71,6 +77,9 @@ ApplicationWindow {
                flat: true
                font.pointSize: 15
                anchors.right:parent.right
+               onClicked: {
+                   dateDisplay = new Date(dateDisplay.getFullYear(),dateDisplay.getMonth() + 1,1)
+               }
            }
         }
 
@@ -98,7 +107,7 @@ ApplicationWindow {
                     width: calendarPage.width
                     height: calendarPage.width
                     year: model.year
-                    month: Calendar.March
+                    month: dateDisplay.getMonth()
                     locale: Qt.locale("en_US")
                 }
 
@@ -109,6 +118,7 @@ ApplicationWindow {
                 }
             }
         }
+
         Rectangle {
             id: petIcon
             width: calendarPage.width
