@@ -12,6 +12,7 @@ ApplicationWindow {
     color: "light blue"
 
     property date dateDisplay: new Date()
+    property date dateSelected: dateDisplay
 
     ColumnLayout{
         Rectangle{
@@ -106,9 +107,17 @@ ApplicationWindow {
                     id: grid
                     width: calendarPage.width
                     height: calendarPage.width
-                    year: model.year
+                    year: dateDisplay.getMonth()
                     month: dateDisplay.getMonth()
                     locale: Qt.locale("en_US")
+
+                    onClicked: {
+                    /*
+                      Could not get this to work,
+                      I'm not sure how to make the day clicked register and save as dateSelected.
+                      */
+                    //    dateSelected  = new Date(date, dateDisplay.getMonth(), 1)
+                    }
                 }
 
                 DayOfWeekRow {
@@ -120,23 +129,18 @@ ApplicationWindow {
         }
 
         Rectangle {
-            id: petIcon
+            id: waterInfo
             width: calendarPage.width
-            height: calendarPage.width
+            height: calendarPage.height *.75
             color: "light blue"
-            Image {
-                id: pet
-                source: "./assets/icons/catIcon.png"
-                width: 60
-                height: 50
-                anchors.left: parent.left
-            }
 
             Text {
-                id: catTxt
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "\nYou're doing a great job!\n"
+                id: infoTxt
+                anchors.horizontalCenter: waterInfo.horizontalCenter
                 font.pointSize: 15
+                text: "You're doing great!\nSelect a day to find out how much water you drank!\nWater drank on "
+                      + Qt.formatDate(dateDisplay, "MM/dd") + " :\n" + JS.dbReadAmount(dateDisplay) + "L"
+                anchors.bottomMargin: 8
             }
         }
     }
