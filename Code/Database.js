@@ -3,11 +3,34 @@ function dbInit()
     let db = LocalStorage.openDatabaseSync("Water_Tracker_DB", "", "Track water intake", 1000000)
     try {
         db.transaction(function (tx) {
+            // tx.executeSql("DROP TABLE users_info")  // uncomment line to reset user data
             tx.executeSql('CREATE TABLE IF NOT EXISTS water_log (date text, amount numeric, happiness numeric)')
+            tx.executeSql('CREATE TABLE IF NOT EXISTS users_info (uid numeric PRIMARY KEY, pname text, uname text, notifon integer)')
+            tx.executeSql("INSERT OR IGNORE INTO users_info VALUES (0, 'your_pet', 'your_name', 0)")
         })
     } catch (err) {
         console.log("Error creating table in database: " + err)
     };
+}
+
+function dbGetUserInfo(uid) {
+    let db = dbGetHandle()
+    let res = {}
+    db.transaction((tx) => {
+        let result = tx.executeSql("SELECT * FROM users_info WHERE uid = ?", [uid]).rows.item(0)
+        res.uname = result.uname
+        res.pname = result.pname
+        res.notifs = result.notifon
+    })
+    return res
+}
+
+function dbWriteUserInfo(uid, uname, pname, notifsOn) {
+    let db = dbGetHandle()
+    db.transaction((tx) => {
+        tx.executeSql("UPDATE users_info SET uname = ?, pname = ?, notifon = ? WHERE uid = ?",
+                      [uname, pname, notifsOn, uid])
+    })
 }
 
 function dbGetHandle()

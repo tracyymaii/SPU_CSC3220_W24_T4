@@ -13,6 +13,9 @@ ApplicationWindow {
     color: "light blue"
     title: "App Name"
 
+    property var userData : new Object({uname: "---", pname: "---", notifs: 0})
+
+
     ColumnLayout{
         Rectangle{
             id: toolBar
@@ -28,13 +31,14 @@ ApplicationWindow {
                 CustomIconButton{
                     id: settingButton
                     appPage: homePage
-                    dest: Setting{}
+                    dest: Setting{property alias userData : homePage.userData}
                     iconSource: "./assets/icons/settingIcon.png"
+                    property alias userData: homePage.userData
                 }
                 CustomIconButton{
                     id: calendarButton
                     appPage: homePage
-                    dest: CalendarPage{}
+                    dest: CalendarPage{property alias userData: homePage.userData}
                     iconSource: "./assets/icons/calendarIcon.png"
                     Layout.alignment: Qt.AlignLeading
                 }
@@ -128,6 +132,23 @@ ApplicationWindow {
                 }
             }
         }
+
+        Rectangle{
+            id: title
+            width: homePage.width
+            height: settingButton.height * 2
+            color: homePage.color
+          //  anchors.centerIn: parent
+
+            CustomButton {
+                id: watertrackertitle
+                content: qsTr("Water Tracker")
+                fontBold: true
+                fontSize: 20
+                anchors.centerIn: parent
+            }
+        }
+
     }
 
     property string today: Qt.formatDateTime(new Date(), "MM/dd/yyyy")

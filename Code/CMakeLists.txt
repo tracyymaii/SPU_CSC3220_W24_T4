@@ -35,6 +35,9 @@ qt_add_qml_module(appWaterTracker
     assets/icons/catIcon.svg
     assets/icons/catIcon.png
     QML_FILES Database.js
+    QML_FILES
+    QML_FILES CustomRectangle.qml
+    QML_FILES CustomRectangleEditable.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

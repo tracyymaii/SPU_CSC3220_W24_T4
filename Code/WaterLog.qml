@@ -116,7 +116,7 @@ ApplicationWindow {
             y: 100
             width: logPage.width * 0.4
             height: 40
-            anchors.horizontalCenter: parent.horizontalCenter
+            Layout.alignment: Qt.AlignHCenter
             color: "white"
             radius: 5
 
@@ -148,9 +148,9 @@ ApplicationWindow {
             fontBold: true
             fontSize: 13
             anchors.topMargin: 5
-            anchors.horizontalCenter: parent.horizontalCenter
+            Layout.alignment: Qt.AlignHCenter
             onButtonClicked: {
-                if (amountTxt.text === "")
+                if (amountTxt.text === "" || amountTxt.text === "0")
                     message.visible = true
                 else{
                     message.visible = false
