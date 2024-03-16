@@ -131,16 +131,26 @@ ApplicationWindow {
         Rectangle {
             id: waterInfo
             width: calendarPage.width
-            height: calendarPage.height *.75
+            height: calendarPage.height * 0.3
             color: "light blue"
 
             Text {
                 id: infoTxt
                 anchors.horizontalCenter: waterInfo.horizontalCenter
-                font.pointSize: 15
-                text: "You're doing great!\nSelect a day to find out how much water you drank!\nWater drank on "
-                      + Qt.formatDate(dateDisplay, "MM/dd") + " :\n" + JS.dbReadAmount(dateDisplay) + "L"
+                font.pointSize: 11
+                text: qsTr("You're doing great!\nSelect a day to find out how much water you drank!\nWater drank on "
+                      + Qt.formatDate(dateDisplay, "MM/dd") + " :\n" + JS.dbReadAmount(dateDisplay) + "L")
                 anchors.bottomMargin: 8
+            }
+
+            Image {
+                id: pet
+                source: "./assets/icons/catIcon.png"
+                width: parent.height * 0.75
+                height: parent.height * 0.75
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
+
             }
         }
     }
