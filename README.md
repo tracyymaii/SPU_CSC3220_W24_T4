@@ -1,4 +1,4 @@
-# SPU_CSC3220_W24_T4
+# Water Tracker Computer App
 Applications Programming Project - Water Tracker
 
 Tracy Mai - tracyymaii
